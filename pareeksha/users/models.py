@@ -38,8 +38,8 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, null=True)
     role = models.IntegerField(choices=ROLE_CHOICES, null=True, blank=True)
-    standard = models.ForeignKey('online_tests.Standard', related_name="students",
-                                 on_delete=models.SET_NULL, null=True, blank=True)
+    # standard = models.ForeignKey('online_tests.Standard', related_name="students",
+    #                              on_delete=models.SET_NULL, null=True, blank=True)
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     
