@@ -3,8 +3,10 @@ export const loadUser = () => {
     return (dispatch, getState) => {
         dispatch({type: "USER_LOADING"});
 
-        const token = getState().auth.token;
-        const user = getState().auth.user;
+        // const token = getState().auth.token;
+        // const user = getState().auth.user;
+        const token = localStorage.getItem('token');
+        const user = JSON.parse(localStorage.getItem('user'));
 
         if (token && user) {
             dispatch({type: 'USER_LOADED', user: user });

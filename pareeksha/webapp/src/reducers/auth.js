@@ -20,7 +20,9 @@ export default function auth(state=initialState, action) {
         case 'LOGIN_SUCCESSFUL':
         case 'REGISTRATION_SUCCESSFUL':
             localStorage.setItem("token", action.data.token);
-            localStorage.setItem("user", action.data.user);
+            localStorage.setItem("user", JSON.stringify(action.data.user));
+            console.log('Successful authentication, localStorage is now:');
+            console.log(localStorage);
             return {...state, ...action.data, isAuthenticated: true, isLoading: false, errors: null};
 
         case 'AUTHENTICATION_ERROR':
