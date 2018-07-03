@@ -1,19 +1,71 @@
 import React, { Component } from 'react';
-import {Route, Switch, BrowserRouter} from 'react-router-dom';
+import {Route, Switch, BrowserRouter, Redirect} from 'react-router-dom';
 import Pareeksha from "./components/Pareeksha";
 import NotFound from "./components/NotFound";
+import Login from "./components/Login";
+import { Provider, connect } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
-class App extends Component {
+import {auth} from "./actions";
+import pareeksha from "./reducers";
+
+let store = createStore(pareeksha, applyMiddleware(thunk));
+
+class RootContainerComponent extends Component {
+  componentDidMount() {
+    this.props.loadUser();
+  }
+
+  PrivateRoute = ({component: ChildComponent, ...rest}) => {
+      return <Route {...rest} render={props => {
+          if (this.props.auth.isLoading) {
+              return <em>Loading...</em>;
+          } else if (!this.props.auth.isAuthenticated) {
+              return <Redirect to="/login" />;
+          } else {
+              return <ChildComponent {...props} />
+          }
+      }} />
+  };
+
   render() {
-  return (
-    <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={Pareeksha} />
-      <Route component={NotFound} />
-    </Switch>
-    </BrowserRouter>
-  );
+    let {PrivateRoute} = this;
+    return (
+        <BrowserRouter>
+            <Switch>
+                <PrivateRoute exact path="/" component={Pareeksha} />
+                {/* <Route exact path="/register" component={Register} /> */}
+                <Route exact path="/login" component={Login} />
+                <Route component={NotFound} />
+            </Switch>
+        </BrowserRouter>
+    );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+      auth: state.auth,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+      loadUser: () => {
+          return dispatch(auth.loadUser());
+      }
+  }
+}
+
+let RootContainer = connect(mapStateToProps, mapDispatchToProps)(RootContainerComponent);
+
+export default class App extends Component {
+    render() {
+        return (
+            <Provider store={store}>
+                <RootContainer />
+            </Provider>
+        )
+    }
+}
