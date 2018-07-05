@@ -50,10 +50,10 @@ export const login = (email, password) => {
     }
 }
 
-export const register = (email, password) => {
+export const register = (email, password, first_name, last_name, role) => {
     return (dispatch, getState) => {
         let headers = {"Content-Type": "application/json"};
-        let body = JSON.stringify({email, password});
+        let body = JSON.stringify({email, password, first_name, last_name, role});
 
         return fetch("/api/auth/register/", {headers, body, method: "POST"})
             .then(res => {
@@ -77,6 +77,9 @@ export const register = (email, password) => {
                     dispatch({type: "REGISTRATION_FAILED", data: res.data});
                     throw res.data;
                 }
+            })
+            .catch((e) => {
+                console.log(e);
             })
     }
 }

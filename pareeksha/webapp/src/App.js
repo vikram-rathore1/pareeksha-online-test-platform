@@ -3,6 +3,7 @@ import {Route, Switch, BrowserRouter, Redirect} from 'react-router-dom';
 import Pareeksha from "./components/Pareeksha";
 import NotFound from "./components/NotFound";
 import Login from "./components/Login";
+import Register from "./components/Register";
 import { Provider, connect } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
@@ -35,7 +36,7 @@ class RootContainerComponent extends Component {
         <BrowserRouter>
             <Switch>
                 <PrivateRoute exact path="/" component={Pareeksha} />
-                {/* <Route exact path="/register" component={Register} /> */}
+                <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
                 <Route component={NotFound} />
             </Switch>
