@@ -54,17 +54,17 @@ class Pareeksha extends Component {
                 </form>
 
                 <h3>Test Papers</h3>
-                {/* <table>
+                <table>
                     <tbody>
                         {this.props.test_papers.map((test_paper, id) => (
-                            <tr key={`note_${test_paper.id}`}>
-                                <td>{test_paper.text}</td>
+                            <tr key={`test_paper_${test_paper.id}`}>
+                                <td>{test_paper.title}</td>
                                 <td><button onClick={() => this.selectForEdit(id)}>edit</button></td>
                                 <td><button onClick={() => this.props.deleteTestPaper(id)}>delete</button></td>
                             </tr>
                         ))}
                     </tbody>
-                </table> */}
+                </table>
             </div>
         )
     }
@@ -72,8 +72,10 @@ class Pareeksha extends Component {
 
 
 const mapStateToProps = state => {
+    console.log('mapping state: ');
+    console.log(state);
     return {
-        test_papers: state.test_papers,
+        test_papers: state.testPapers,
         user: state.auth.user,
     }
 }

@@ -6,6 +6,7 @@ export default function testPapers(state=initialState, action) {
     switch (action.type) {
 
         case 'FETCH_TEST_PAPERS':
+            console.log([...state, ...action.test_papers]);
             return [...state, ...action.test_papers];
 
         case 'ADD_TEST_PAPER':

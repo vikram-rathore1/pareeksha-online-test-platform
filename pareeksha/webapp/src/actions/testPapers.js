@@ -106,7 +106,7 @@ export const deleteTestPaper = index => {
             headers["Authorization"] = `Token ${token}`;
         }
 
-        let testPaperId = getState().test_papers[index].id;
+        let testPaperId = getState().testPapers[index].id;
 
         return fetch(`/api/online_tests/${testPaperId}/`, {headers, method: "DELETE"})
             .then(res => {
