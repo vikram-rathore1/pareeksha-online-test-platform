@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 
 from users import urls as auth_urls
+from online_tests import urls as online_test_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/auth/', include(auth_urls)),
+    url(r'^api/', include(online_test_urls)),
     url(r'^', TemplateView.as_view(template_name="index.html")),
 ]
