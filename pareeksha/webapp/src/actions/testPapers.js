@@ -29,7 +29,7 @@ export const fetchTestPapers = () => {
     }
 };
 
-export const addTestPaper = text => {
+export const addTestPaper = test => {
     return (dispatch, getState) => {
         let headers = {"Content-Type": "application/json"};
         let {token} = getState().auth;
@@ -38,7 +38,7 @@ export const addTestPaper = text => {
             headers["Authorization"] = `Token ${token}`;
         }
 
-        let body = JSON.stringify({text, });
+        let body = JSON.stringify(test);
         return fetch("/api/online_tests/", {headers, method: "POST", body})
             .then(res => {
                 if (res.status < 500) {

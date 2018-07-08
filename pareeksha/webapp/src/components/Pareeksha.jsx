@@ -11,7 +11,7 @@ class Pareeksha extends Component {
     }
 
     state = {
-        text: "",
+        test: {},
         updateTestPaperId: null,
     }
 
@@ -27,9 +27,9 @@ class Pareeksha extends Component {
     submitTestPaper = (e) => {
         e.preventDefault();
         if (this.state.updateTestPaperId === null) {
-            this.props.addTestPaper(this.state.text).then(this.resetForm);
+            this.props.addTestPaper(this.state.test).then(this.resetForm);
         } else {
-            this.props.updateTestPaper(this.state.updateTestPaperId, this.state.text).then(this.resetForm);
+            this.props.updateTestPaper(this.state.updateTestPaperId, this.state.test).then(this.resetForm);
         }
     }
 
@@ -45,9 +45,15 @@ class Pareeksha extends Component {
                 <h3>Add new test paper</h3>
                 <form onSubmit={this.submitTestPaper}>
                     <input
-                        value={this.state.text}
-                        placeholder="Enter desc here..."
-                        onChange={(e) => this.setState({text: e.target.value})}
+                        value={this.state.test.title}
+                        placeholder="Enter title here..."
+                        onChange={(e) => this.setState({test: {...this.state.test, title: e.target.value}})}
+                        required />
+                    <br/>
+                    <textarea
+                        value={this.state.test.description}
+                        placeholder="Enter description here..."
+                        onChange={(e) => this.setState({test: {...this.state.test, description: e.target.value}})}
                         required />
                     <button onClick={this.resetForm}>Reset</button>
                     <input type="submit" value="Save Test Paper" />
@@ -72,8 +78,6 @@ class Pareeksha extends Component {
 
 
 const mapStateToProps = state => {
-    console.log('mapping state: ');
-    console.log(state);
     return {
         test_papers: state.testPapers,
         user: state.auth.user,
@@ -85,8 +89,8 @@ const mapDispatchToProps = dispatch => {
         fetchTestPapers: () => {
             dispatch(testPapers.fetchTestPapers());
         },
-        addTestPaper: (text) => {
-            return dispatch(testPapers.addTestPaper(text));
+        addTestPaper: (test) => {
+            return dispatch(testPapers.addTestPaper(test));
         },
         updateTestPaper: (id, text) => {
             return dispatch(testPapers.updateTestPaper(id, text));
